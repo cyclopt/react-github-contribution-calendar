@@ -9,6 +9,8 @@ interface Props {
   values: { [date: string]: number }
   until: string
   dateFormat: string
+  wrapRectComponent: React.ComponentType
+  wrapRectProps: Function
 }
 
 interface State {
@@ -84,14 +86,15 @@ export default class GitHubCalendar extends React.Component<Props, State> {
         const pos = this.getPanelPosition(i, j);
         const color = this.props.panelColors[contribution.value];
         const dom = (
+          <this.props.wrapRectComponent key={`panel_key_${i}_${j}`} {...this.props.wrapRectProps(contribution)}>
           <rect
-            key={ 'panel_key_' + i + '_' + j }
             x={ pos.x }
             y={ pos.y }
             width={ this.panelSize }
             height={ this.panelSize }
             fill={ color }
           />
+          </this.props.wrapRectComponent>
         );
         innerDom.push(dom);
       }
@@ -177,5 +180,7 @@ GitHubCalendar.defaultProps = {
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ],
   panelColors: ['#EEE', '#DDD', '#AAA', '#444'],
-  dateFormat: 'YYYY-MM-DD'
+  dateFormat: 'YYYY-MM-DD',
+	wrapRectComponent: React.Fragment,
+  wrapRectProps: () => ({})
 };
