@@ -84,7 +84,7 @@ export default class GitHubCalendar extends React.Component<Props, State> {
         var contribution = contributions[i][j];
         if (contribution === null) continue;
         const pos = this.getPanelPosition(i, j);
-        const color = this.props.panelColors[Math.trunc(contribution.value)];
+        const color = this.props.panelColors[Math.ceil(contribution.value)];
         const dom = (
           <this.props.wrapRectComponent key={`panel_key_${i}_${j}`} {...this.props.wrapRectProps(contribution)}>
           <rect
